@@ -36,13 +36,19 @@
                         {{product.title}}
                     </v-card-subtitle>
                     <v-card-actions class="mt-n5">
-                        <v-btn color="primary">
+                        <v-btn color="primary" @click="add_product_to_order(product)">
                             Agregar al pedido
                         </v-btn>
                     </v-card-actions>
                 </div>
             </v-card>
         </div>
+        <v-snackbar
+            v-model="snackbar_active"
+            :timeout="snackbar_timeout"
+        >
+            {{snackbar_message}}
+        </v-snackbar>
   </v-container>
 </template>
 
@@ -54,6 +60,20 @@ export default {
         return {
             allProducts:[],
             showByIndex:null,
+
+            snackbar_message:'',
+            snackbar_active:false,
+            snackbar_timeout:2000
+        }
+    },
+    methods:{
+        add_product_to_order(product){
+            this.$store.commit("addProductToCurrentOrder",product);
+            this.snackbar_active=true;
+            this.snackbar_message="Producto añadido al pedido actual";
+        },
+        showProductDetails(product){
+            console.log(product);
         }
     },
     mounted(){

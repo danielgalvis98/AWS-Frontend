@@ -17,12 +17,18 @@
       </v-btn>
       <v-btn
         icon
+        @click="open_cart_dialog"
       >
-        <v-icon
-          color="white"
+        <v-badge
+          color="red"
+          :content="order_product_count"
         >
-          mdi-cart
-        </v-icon>
+          <v-icon
+            color="white"
+          >
+            mdi-cart
+          </v-icon>
+        </v-badge>
       </v-btn>
 
       <v-spacer></v-spacer>
@@ -51,6 +57,31 @@
     <v-main>
       <router-view></router-view>
     </v-main>
+    <v-overlay
+      v-model="cart_dialog"
+    >
+      <v-card
+        v-click-outside="onClickOutside"
+        light
+        class="pa-5"
+      >
+        <v-list>
+          <v-list-item
+            v-for="(product,i) in products"
+            :key="i"
+          >
+            {{product.title}}
+          </v-list-item>
+        </v-list>
+        <v-card-actions>
+          <v-btn
+            @click="send_order"
+          >
+            Enviar pedido
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-overlay>
   </v-app>
 </template>
 
@@ -58,13 +89,30 @@
 // import HelloWorld from './components/HelloWorld';
 export default {
   name: 'App',
-
   components: {
     // HelloWorld,
   },
-
   data: () => ({
-    //
+    cart_dialog:false
   }),
+  computed:{
+    products(){
+      return this.$store.state.current_order.products;
+    },
+    order_product_count(){
+      return this.$store.state.current_order.products.length;
+    }
+  },
+  methods:{
+    onClickOutside(){
+      this.cart_dialog=false;
+    },
+    open_cart_dialog(){
+      this.cart_dialog=true;
+    },
+    send_order(){
+      console.log("WORKING");
+    }
+  }
 };
 </script>

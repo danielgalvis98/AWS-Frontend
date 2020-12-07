@@ -10,5 +10,9 @@ export default new Vuex.Store({
         }
     },
     actions:{},
-    mutations:{}
+    mutations:{
+        addProductToCurrentOrder(state,product){
+            state.current_order.products.push(product);
+        }
+    }
 })
