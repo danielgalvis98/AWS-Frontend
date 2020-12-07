@@ -1,17 +1,18 @@
 import Vue from 'vue'
 import App from './App.vue'
-import VueRouter from 'vue-router'
 import vuetify from './plugins/vuetify';
 import Vue2Filters from 'vue2-filters'
 
 
 import Amplify, { Auth } from 'aws-amplify';
+import '@aws-amplify/ui-vue';
+
+import VueRouter from 'vue-router'
 import RegisterClient from './components/RegisterClient';
 import SignIn from './components/SignIn';
 import ProductList from './components/ProductList';
 
-import '@aws-amplify/ui-vue';
-
+import store from './store'
 
 const routes = [
   {
@@ -55,5 +56,6 @@ Auth.configure({
 new Vue({
   router,
   vuetify,
+  store,
   render: h => h(App)
 }).$mount('#app')

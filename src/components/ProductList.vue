@@ -35,6 +35,11 @@
                     <v-card-subtitle>
                         {{product.title}}
                     </v-card-subtitle>
+                    <v-card-actions class="mt-n5">
+                        <v-btn color="primary">
+                            Agregar al pedido
+                        </v-btn>
+                    </v-card-actions>
                 </div>
             </v-card>
         </div>

@@ -15,6 +15,15 @@
           mdi-circle
         </v-icon>
       </v-btn>
+      <v-btn
+        icon
+      >
+        <v-icon
+          color="white"
+        >
+          mdi-cart
+        </v-icon>
+      </v-btn>
 
       <v-spacer></v-spacer>
 
