@@ -35,6 +35,18 @@
         <span class="mr-2">Latest Release</span>
         <v-icon>mdi-open-in-new</v-icon>
       </v-btn>
+      <v-btn
+        to="/login"
+        text
+      >
+        <span class="mr-2">Iniciar sesion / salir</span>
+      </v-btn>
+      <v-btn
+        to="/registerClient"
+        text
+      >
+        <span class="mr-2">Registrar Cliente</span>
+      </v-btn>
     </v-app-bar>
 
     <v-main>
@@ -45,7 +57,6 @@
 
 <script>
 // import HelloWorld from './components/HelloWorld';
-
 export default {
   name: 'App',
 
