@@ -110,10 +110,11 @@ export default {
             axios.post("/clientes", this.client).then((res) => {
                 console.log('Hola la bandaaaaaa');
                 console.log(res);
+                alert('El usuario fue agregado/editado exitosamente!');
                 this.clearFields()
             }).catch((err) => {
-              console.log('Hola la bandaaaaaa');
               console.log(err);
+              alert(err);
               this.clearFields()
             });
         },
@@ -125,7 +126,7 @@ export default {
             correo: "",
             direccion: "",
             cedula: ""
-        }
+          }
         }
     }
 }
