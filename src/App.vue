@@ -152,7 +152,6 @@ export default {
         delivery_address: this.delivery_address,
         ordered_products: this.$store.state.current_order.products
       }
-      console.log(this.client_identification);
       axios.post("https://g9io6stxi2.execute-api.us-west-2.amazonaws.com/Produccion/orders",data,
       {
         headers:{
