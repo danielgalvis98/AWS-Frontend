@@ -65,12 +65,30 @@
         light
         class="pa-5"
       >
+        <v-text-field
+          v-model="client_identification"
+          label="Cédula"
+        ></v-text-field>
+        <v-text-field
+          v-model="delivery_address"
+          label="Dirección de entrega"
+        ></v-text-field>
+        <v-card-title>
+          Productos en el pedido
+        </v-card-title>
         <v-list>
           <v-list-item
             v-for="(product,i) in products"
             :key="i"
           >
-            {{product.title}}
+            <v-list-item-title>
+              {{product.title}}
+            </v-list-item-title>
+            <v-list-item-action>
+                <v-btn @click="remove_product_from_order(i)" icon>
+                  <v-icon>mdi-delete</v-icon>
+                </v-btn>
+            </v-list-item-action>
           </v-list-item>
         </v-list>
         <v-card-actions>
@@ -93,7 +111,11 @@ export default {
     // HelloWorld,
   },
   data: () => ({
-    cart_dialog:false
+    cart_dialog:false,
+
+
+    client_identification:'',
+    delivery_address:''
   }),
   computed:{
     products(){
@@ -112,6 +134,9 @@ export default {
     },
     send_order(){
       console.log("WORKING");
+    },
+    remove_product_from_order(i){
+      this.$store.commit("removeProductFromOrder",i);
     }
   }
 };

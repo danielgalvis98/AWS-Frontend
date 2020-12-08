@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "deploy": "aws --region us-west-2 --profile web-deployer s3 sync ./dist s3://group4-greenstore-web-application --delete"
   },
   "dependencies": {
     "@aws-amplify/ui-vue": "^0.2.30",

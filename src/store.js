@@ -13,6 +13,9 @@ export default new Vuex.Store({
     mutations:{
         addProductToCurrentOrder(state,product){
             state.current_order.products.push(product);
+        },
+        removeProductFromOrder(state,index){
+            state.current_order.products.splice(index,1);
         }
     }
 })
