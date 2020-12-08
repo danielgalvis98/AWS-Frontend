@@ -45,6 +45,12 @@
       >
         <span class="mr-2">Iniciar sesion / salir</span>
       </v-btn>
+      <v-btn
+        to="/clients"
+        text
+      >
+        <span class="mr-2">Ver Clientes</span>
+      </v-btn>
     </v-app-bar>
 
     <v-main>
