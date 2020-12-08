@@ -57,33 +57,46 @@
         v-click-outside="onClickOutside"
         light
         class="pa-5"
+        height="500"
+        max-height="500"
       >
-        <v-text-field
-          v-model="client_identification"
-          label="Cédula"
-        ></v-text-field>
-        <v-text-field
-          v-model="delivery_address"
-          label="Dirección de entrega"
-        ></v-text-field>
-        <v-card-title>
-          Productos en el pedido
-        </v-card-title>
-        <v-list>
-          <v-list-item
-            v-for="(product,i) in products"
-            :key="i"
-          >
-            <v-list-item-title>
-              {{product.title}}
-            </v-list-item-title>
-            <v-list-item-action>
-                <v-btn @click="remove_product_from_order(i)" icon>
-                  <v-icon>mdi-delete</v-icon>
-                </v-btn>
-            </v-list-item-action>
-          </v-list-item>
-        </v-list>
+        <v-card class="pa-5">      
+          <v-file-input
+            show-size
+            label="Documento de identificación"
+            @change="selectIdentificationFile"
+          ></v-file-input>
+          <v-text-field
+            v-model="delivery_address"
+            label="Dirección de entrega"
+          ></v-text-field>
+          <v-file-input
+            show-size
+            label="Cotizaciones"
+            @change="selectQuoteFile"
+          ></v-file-input>
+        </v-card>
+
+        <v-card class="mt-5">
+          <v-card-title>
+            Productos en el pedido
+          </v-card-title>
+          <v-list>
+            <v-list-item
+              v-for="(product,i) in products"
+              :key="i"
+            >
+              <v-list-item-title>
+                {{product.title}}
+              </v-list-item-title>
+              <v-list-item-action>
+                  <v-btn @click="remove_product_from_order(i)" icon>
+                    <v-icon>mdi-delete</v-icon>
+                  </v-btn>
+              </v-list-item-action>
+            </v-list-item>
+          </v-list>
+        </v-card>
         <v-card-actions>
           <v-btn
             @click="send_order"
@@ -108,6 +121,7 @@ export default {
 
 
     client_identification:'',
+    client_quotation:'',
     delivery_address:''
   }),
   computed:{
@@ -130,7 +144,20 @@ export default {
     },
     remove_product_from_order(i){
       this.$store.commit("removeProductFromOrder",i);
+    },
+    selectIdentificationFile(file){
+      this.client_identification=file;
+    },
+    selectQuoteFile(file){
+      this.client_quotation=file;
     }
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.v-card{
+  height:250px;/* or any height you want */
+  overflow-y:auto
+}
+</style>
