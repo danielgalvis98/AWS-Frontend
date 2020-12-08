@@ -59,8 +59,10 @@
         class="pa-5"
         height="500"
         max-height="500"
+        width="450"
+        max-width="450"
       >
-        <v-card class="pa-5">      
+        <v-card class="pa-5">   
           <v-file-input
             show-size
             label="Documento de identificación"
@@ -110,12 +112,10 @@
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld';
+import axios from './config/axios'
+
 export default {
   name: 'App',
-  components: {
-    // HelloWorld,
-  },
   data: () => ({
     cart_dialog:false,
 
@@ -140,16 +140,48 @@ export default {
       this.cart_dialog=true;
     },
     send_order(){
-      console.log("WORKING");
+      let data={
+        client_identification_base64:this.client_identification,
+        client_quotation_base64: this.client_quotation,
+        delivery_address: this.delivery_address,
+        ordered_products: this.$store.state.current_order.products
+      }
+      console.log(this.client_identification);
+      axios.post("https://g9io6stxi2.execute-api.us-west-2.amazonaws.com/Produccion/orders",data,
+      {
+        headers:{
+          "Content-Type":"multipart/form-data",
+          'Accept':'*',
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials" : true,
+        }
+      }).then((res)=>{
+        console.log(res)
+        alert("Pedido enviado exitosamente")
+      }).catch((err)=>{
+        console.log(err)
+      })
     },
     remove_product_from_order(i){
       this.$store.commit("removeProductFromOrder",i);
     },
     selectIdentificationFile(file){
-      this.client_identification=file;
+      this.getBase64(file).then(
+        data => this.client_identification=data
+      );
     },
     selectQuoteFile(file){
-      this.client_quotation=file;
+      this.getBase64(file).then(
+        data => this.client_quotation=data
+      );
+    },
+    getBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+      });
     }
   }
 };
