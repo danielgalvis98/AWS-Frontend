@@ -1,7 +1,7 @@
 <template>
   <v-data-table
     :headers="headers"
-    :items="users"
+    :items="clients"
     :items-per-page="5"
     class="elevation-1"
   ></v-data-table>
@@ -35,14 +35,16 @@ export default {
           value: "direccion",
         },
       ],
-      users: [],
+      clients: [],
     };
   },
   methods: {
     async findUserToken() {
       try {
         const user = await Auth.currentAuthenticatedUser();
-        console.log('Keeeeeee '+ user.getSignInUserSession().getIdToken().getJwtToken());
+        console.log(
+          "Keeeeeee " + user.getSignInUserSession().getIdToken().getJwtToken()
+        );
         return user.getSignInUserSession().getIdToken().getJwtToken();
       } catch (err) {
         alert("You need to be logged in!");
@@ -51,7 +53,7 @@ export default {
   },
   async created() {
     const jwtToken = await this.findUserToken();
-    console.log('Y acaaaaa ' + jwtToken);
+    console.log("Y acaaaaa " + jwtToken);
     if (jwtToken === undefined) return;
     const config = {
       headers: {
@@ -59,8 +61,8 @@ export default {
       },
     };
     axios.get("/clientes", config).then((res) => {
-        console.log(res.data.body);
-      this.users = res.data.body;
+      console.log(res.data.body);
+      this.clients = res.data.body;
     });
   },
 };

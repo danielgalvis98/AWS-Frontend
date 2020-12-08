@@ -11,7 +11,7 @@ import VueRouter from 'vue-router'
 import RegisterClient from './components/RegisterClient';
 import SignIn from './components/SignIn';
 import ProductList from './components/ProductList';
-import UsersList from './components/UsersList';
+import ClientsList from './components/ClientsList';
 
 import store from './store'
 
@@ -29,8 +29,8 @@ const routes = [
     component: SignIn
   },
   {
-    path: '/users',
-    component: UsersList
+    path: '/clients',
+    component: ClientsList
   }
 ]
 
