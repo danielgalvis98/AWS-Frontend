@@ -62,11 +62,7 @@
       <v-card
         v-click-outside="onClickOutside"
         light
-        class="pa-5"
-        height="500"
-        max-height="500"
-        width="450"
-        max-width="450"
+        class="pa-5 order-vcard"
       >
         <v-card class="pa-5">   
           <v-file-input
@@ -193,8 +189,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.v-card{
-  height:250px;/* or any height you want */
+.order-vcard{
+  height:550px;/* or any height you want */
+  width:500px;
   overflow-y:auto
 }
 </style>
