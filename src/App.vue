@@ -32,7 +32,6 @@
       </v-btn>
 
       <v-spacer></v-spacer>
-
       <v-btn
         to="/registerClient"
         text
@@ -45,12 +44,6 @@
         text
       >
         <span class="mr-2">Iniciar sesion / salir</span>
-      </v-btn>
-      <v-btn
-        to="/registerClient"
-        text
-      >
-        <span class="mr-2">Registrar Cliente</span>
       </v-btn>
     </v-app-bar>
 
