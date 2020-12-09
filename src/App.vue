@@ -171,15 +171,10 @@ export default {
         client_quotation_base64: this.client_quotation,
         delivery_address: this.delivery_address,
         ordered_products: this.$store.state.current_order.products,
-        telephone: this.telephone
+        telephone: this.telephone,
+        state: 'PENDIENTE'
       }
-      axios.post("https://g9io6stxi2.execute-api.us-west-2.amazonaws.com/Produccion/orders",data,
-      {
-        headers:{
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Credentials" : true,
-        }
-      }).then((res)=>{
+      axios.post("/orders",data).then((res)=>{
         console.log(res)
         alert("Pedido enviado exitosamente")
       }).catch((err)=>{

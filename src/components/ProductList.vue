@@ -62,7 +62,7 @@
                     <v-btn @click="exit_product_dialog">
                         Salir
                     </v-btn>
-                    <v-btn color="primary" @click="add_product_to_order(product)">
+                    <v-btn color="primary" @click="add_product_to_order(showed_product)">
                         ¡Agregar al pedido!
                     </v-btn>
                 </v-card-actions>

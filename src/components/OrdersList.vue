@@ -72,6 +72,11 @@
         </v-card-subtitle>
       </v-card>
     </v-dialog>
+    <v-dialog v-model="order_attend_dialog">
+      <v-btn @click="attend_current_order">
+        Atender orden
+      </v-btn>
+    </v-dialog>
   </v-container>
 </template>
 <script>
@@ -82,6 +87,10 @@ export default {
   data() {
     return {
       headers: [
+        {
+          text: "Identificador de la solicitud",
+          value: "id"
+        },
         {
           text: "Dirección de solicitud",
           value: "deliveryAddress",
@@ -99,6 +108,10 @@ export default {
           value: "telephone"
         },
         {
+          text: "Estado del pedido",
+          value: "state"
+        },
+        {
           text: "Acciones",
           value: 'actions'
         }
@@ -109,6 +122,9 @@ export default {
 
       showed_order:'',
       order_details_dialog:false,
+
+      order_attend_dialog:false,
+      order_to_be_attended:''
     };
   },
   methods: {
@@ -128,38 +144,62 @@ export default {
       this.showed_order=item;
     },
     editItem(item){
-      console.log(item);
+      this.order_attend_dialog=true;
+      this.order_to_be_attended=item;
+    },
+    async attend_current_order(){
+      console.log(this.order_to_be_attended.id);
+      const jwtToken = await this.findUserToken();
+      // console.log("Y acaaaaa " + jwtToken);
+      if (jwtToken === undefined) return;
+      const config = {
+        headers: {
+          authorization: jwtToken
+        },
+      };
+      let data={
+        id:this.order_to_be_attended.id
+      }
+      axios.put("/orders",data,config).then((res)=>{
+        console.log(res);
+        this.reset_order_list();
+      })
     },
     initialize(){
       console.log("REBOOTED")
+    },
+    async reset_order_list(){
+      this.orders_info=[];
+      const jwtToken = await this.findUserToken();
+      // console.log("Y acaaaaa " + jwtToken);
+      if (jwtToken === undefined) return;
+      const config = {
+        headers: {
+          authorization: jwtToken,
+        },
+      };
+      axios.get("/orders", config).then((res) => {
+      //   console.log(res.data.body);
+        this.orders = res.data.body;
+        this.orders.forEach(order => {
+            console.log(order)
+            this.orders_info.push({
+                id: order.id,
+                deliveryAddress: order.deliveryAddress,
+                totalProducts: order.orderedProducts.length,
+                finalPrice: order.orderedProducts.reduce((a, b) => a + b.price, 0),
+                telephone: order.telephone,
+                products: order.orderedProducts,
+                clientId: order.identificationFile,
+                quotation: order.quotationFile,
+                state: order.orderState,
+            })
+        });
+      });
     }
   },
   async created() {
-    const jwtToken = await this.findUserToken();
-    // console.log("Y acaaaaa " + jwtToken);
-    if (jwtToken === undefined) return;
-    const config = {
-      headers: {
-        authorization: jwtToken,
-      },
-    };
-    axios.get("/orders", config).then((res) => {
-    //   console.log(res.data.body);
-      this.orders = res.data.body;
-      this.orders.forEach(order => {
-          console.log(order)
-          this.orders_info.push({
-              id: order.id,
-              deliveryAddress: order.deliveryAddress,
-              totalProducts: order.orderedProducts.length,
-              finalPrice: order.orderedProducts.reduce((a, b) => a + b.price, 0),
-              telephone: order.telephone,
-              products: order.orderedProducts,
-              clientId: order.identificationFile,
-              quotation: order.quotationFile
-          })
-      });
-    });
+    this.reset_order_list();
   },
 };
 </script>
