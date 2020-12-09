@@ -51,6 +51,12 @@
       >
         <span class="mr-2">Ver Clientes</span>
       </v-btn>
+      <v-btn
+        to="/orders"
+        text
+      >
+        <span class="mr-2">Ver Pedidos</span>
+      </v-btn>
     </v-app-bar>
 
     <v-main>
