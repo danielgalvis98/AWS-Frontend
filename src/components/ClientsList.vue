@@ -3,8 +3,17 @@
     :headers="headers"
     :items="clients"
     :items-per-page="5"
+    :search="search"
     class="elevation-1"
-  ></v-data-table>
+  >
+    <template v-slot:top>
+      <v-text-field
+        v-model="search"
+        label="Search"
+        class="mx-4"
+      ></v-text-field>
+    </template>
+  </v-data-table>
 </template>
 <script>
 import axios from "../config/axios";
@@ -36,6 +45,8 @@ export default {
         },
       ],
       clients: [],
+
+      search:'',
     };
   },
   methods: {
