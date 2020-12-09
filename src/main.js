@@ -12,6 +12,7 @@ import RegisterClient from './components/RegisterClient';
 import SignIn from './components/SignIn';
 import ProductList from './components/ProductList';
 import ClientsList from './components/ClientsList';
+import OrdersList from './components/OrdersList';
 
 import store from './store'
 
@@ -31,6 +32,10 @@ const routes = [
   {
     path: '/clients',
     component: ClientsList
+  },
+  {
+    path:'/orders',
+    component: OrdersList
   }
 ]
 
