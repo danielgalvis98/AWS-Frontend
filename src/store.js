@@ -7,7 +7,8 @@ export default new Vuex.Store({
     state:{
         current_order:{
             products:[]
-        }
+        },
+        is_user_logged:false,
     },
     actions:{},
     mutations:{

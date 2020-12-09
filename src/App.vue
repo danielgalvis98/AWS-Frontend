@@ -32,31 +32,41 @@
       </v-btn>
 
       <v-spacer></v-spacer>
-      <v-btn
-        to="/registerClient"
-        text
-      >
-        <span class="mr-2">Registrar cliente</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-      <v-btn
-        to="/login"
-        text
-      >
-        <span class="mr-2">Iniciar sesion / salir</span>
-      </v-btn>
-      <v-btn
-        to="/clients"
-        text
-      >
-        <span class="mr-2">Ver Clientes</span>
-      </v-btn>
-      <v-btn
-        to="/orders"
-        text
-      >
-        <span class="mr-2">Ver Pedidos</span>
-      </v-btn>
+      <div v-if="is_logged">
+        <v-btn
+          to="/registerClient"
+          text
+        >
+          <span class="mr-2">Registrar cliente</span>
+          <v-icon>mdi-open-in-new</v-icon>
+        </v-btn>
+        <v-btn
+          to="/clients"
+          text
+        >
+          <span class="mr-2">Ver Clientes</span>
+        </v-btn>
+        <v-btn
+          to="/orders"
+          text
+        >
+          <span class="mr-2">Ver Pedidos</span>
+        </v-btn>
+        <v-btn
+          to="/login"
+          text
+        >
+          <span class="mr-2">Iniciar sesion / salir</span>
+        </v-btn>
+      </div>
+      <div v-else>
+        <v-btn
+          to="/login"
+          text
+        >
+          <span class="mr-2">Iniciar sesion / salir</span>
+        </v-btn>
+      </div>
     </v-app-bar>
 
     <v-main>
@@ -125,12 +135,12 @@
 
 <script>
 import axios from './config/axios'
+import { Auth } from "aws-amplify";
 
 export default {
   name: 'App',
   data: () => ({
     cart_dialog:false,
-
 
     client_identification:'',
     client_quotation:'',
@@ -143,6 +153,9 @@ export default {
     },
     order_product_count(){
       return this.$store.state.current_order.products.length;
+    },
+    is_logged(){
+      return this.$store.state.is_user_logged;
     }
   },
   methods:{
@@ -194,6 +207,16 @@ export default {
         reader.onerror = error => reject(error);
       });
     }
+  },
+  mounted(){
+    console.log("executes")
+    Auth.currentAuthenticatedUser().then((res)=>{
+      console.log(res);
+      this.$store.state.is_user_logged=true;
+    }).catch((err)=>{
+      console.log(err);
+      this.$store.state.is_user_logged=false;
+    })
   }
 };
 </script>

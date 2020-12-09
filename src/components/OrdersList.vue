@@ -3,8 +3,17 @@
     :headers="headers"
     :items="orders_info"
     :items-per-page="5"
+    :search="search"
     class="elevation-1"
-  ></v-data-table>
+  >
+    <template v-slot:top>
+      <v-text-field
+        v-model="search"
+        label="Search"
+        class="mx-4"
+      ></v-text-field>
+    </template>
+  </v-data-table>
 </template>
 <script>
 import axios from "../config/axios";
@@ -26,9 +35,14 @@ export default {
           text: "Precio Final",
           value: "finalPrice",
         },
+        {
+          text: "Telefono de contacto",
+          value: "telephone"
+        }
       ],
       orders: [],
-      orders_info: []
+      orders_info: [],
+      search:''
     };
   },
   methods: {
@@ -62,7 +76,8 @@ export default {
               id: order.id,
               deliveryAddress: order.deliveryAddress,
               totalProducts: order.orderedProducts.length,
-              finalPrice: order.orderedProducts.reduce((a, b) => a + b.price, 0)
+              finalPrice: order.orderedProducts.reduce((a, b) => a + b.price, 0),
+              telephone: order.telephone
           })
       });
     });

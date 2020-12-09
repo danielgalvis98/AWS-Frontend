@@ -43,6 +43,31 @@
                 </div>
             </v-card>
         </div>
+        <v-dialog 
+            v-model="product_details_dialog"
+        >
+            <v-card
+                class="pa-5"
+            >
+                <v-card-title>
+                    {{showed_product.title}}
+                </v-card-title>
+                <v-img
+                    :src="showed_product.image"
+                ></v-img>
+                <v-card-text>
+                    {{showed_product.description}}
+                </v-card-text>
+                <v-card-actions>
+                    <v-btn @click="exit_product_dialog">
+                        Salir
+                    </v-btn>
+                    <v-btn color="primary" @click="add_product_to_order(product)">
+                        ¡Agregar al pedido!
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
         <v-snackbar
             v-model="snackbar_active"
             :timeout="snackbar_timeout"
@@ -61,6 +86,9 @@ export default {
             allProducts:[],
             showByIndex:null,
 
+            product_details_dialog:false,
+            showed_product:'',
+
             snackbar_message:'',
             snackbar_active:false,
             snackbar_timeout:2000
@@ -74,6 +102,11 @@ export default {
         },
         showProductDetails(product){
             console.log(product);
+            this.product_details_dialog=true;
+            this.showed_product=product;
+        },
+        exit_product_dialog(){
+            this.product_details_dialog=false;
         }
     },
     mounted(){

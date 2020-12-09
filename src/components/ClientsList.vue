@@ -42,9 +42,7 @@ export default {
     async findUserToken() {
       try {
         const user = await Auth.currentAuthenticatedUser();
-        console.log(
-          "Keeeeeee " + user.getSignInUserSession().getIdToken().getJwtToken()
-        );
+        console.log(user.getSignInUserSession().getIdToken().getJwtToken());
         return user.getSignInUserSession().getIdToken().getJwtToken();
       } catch (err) {
         alert("You need to be logged in!");
@@ -53,7 +51,7 @@ export default {
   },
   async created() {
     const jwtToken = await this.findUserToken();
-    console.log("Y acaaaaa " + jwtToken);
+    console.log("el token " + jwtToken);
     if (jwtToken === undefined) return;
     const config = {
       headers: {
