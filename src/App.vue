@@ -71,15 +71,19 @@
         class="pa-5 order-vcard"
       >
         <v-card class="pa-5">   
+          <v-text-field
+            v-model="delivery_address"
+            label="Dirección de entrega"
+          ></v-text-field>
+          <v-text-field
+            v-model="telephone"
+            label="Contacto telefonico"
+          ></v-text-field>
           <v-file-input
             show-size
             label="Documento de identificación"
             @change="selectIdentificationFile"
           ></v-file-input>
-          <v-text-field
-            v-model="delivery_address"
-            label="Dirección de entrega"
-          ></v-text-field>
           <v-file-input
             show-size
             label="Cotizaciones"
@@ -130,7 +134,8 @@ export default {
 
     client_identification:'',
     client_quotation:'',
-    delivery_address:''
+    delivery_address:'',
+    telephone:''
   }),
   computed:{
     products(){
@@ -152,13 +157,12 @@ export default {
         client_identification_base64:this.client_identification,
         client_quotation_base64: this.client_quotation,
         delivery_address: this.delivery_address,
-        ordered_products: this.$store.state.current_order.products
+        ordered_products: this.$store.state.current_order.products,
+        telephone: this.telephone
       }
       axios.post("https://g9io6stxi2.execute-api.us-west-2.amazonaws.com/Produccion/orders",data,
       {
         headers:{
-          "Content-Type":"multipart/form-data",
-          'Accept':'*',
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Credentials" : true,
         }
