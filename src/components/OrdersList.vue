@@ -21,6 +21,12 @@
           >
               mdi-eye
           </v-icon>
+          <v-icon
+              class="mr-2"
+              @click="editItem(item)"
+          >
+              mdi-pencil
+          </v-icon>
       </template>
       <template v-slot:no-data>
         <v-btn
@@ -120,6 +126,12 @@ export default {
     showItem(item){
       this.order_details_dialog=true;
       this.showed_order=item;
+    },
+    editItem(item){
+      console.log(item);
+    },
+    initialize(){
+      console.log("REBOOTED")
     }
   },
   async created() {
